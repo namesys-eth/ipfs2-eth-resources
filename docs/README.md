@@ -2,30 +2,38 @@
 #### Authors: `sshmatrix`, `0xc0de4c0ffee`
 ###### tags: `specification` `resolver` `contenthash` `ccip` `ens`
 
-IPFS2 is a proof-of-concept ENS Resolver capable of resolving IPFS/IPNS contenthash and records as subdomains of a parent name, and render associated ABI-encoded records when queried via a URL. Several centralised IPFS content providers offer IPFS/IPNS resolution of the form `https://<hash>.dweb.link` → `https://ipfs.io/ipfs/<hash>` (or similar). IPFS2 is a similar service with off-chain centralised resolvers replaced with on-chain resolvers. IPFS2 Resolver also supports additional features such as querying `data` records associated with the (ENS) contenthash in [RFC-8615](https://www.rfc-editor.org/rfc/rfc8615) compatible URL format.
-
-## Query Syntax
-
-To resolve `<data>` content stored at IPFS `<hash>`, i.e. `https://ipfs.io/ipfs/<hash>/.well-known/<data>.json`, URL query is formatted as:
-
-```
-https://<hash>.ipfs2.eth.*/.well-known/<data>.json
-```
-
-# Description
-
-`IPFS2.eth` is a dual implementation of CCIP-Read 'Off-chain Lookup', in which the Resolver contract is capable of fulfilling two queries simultaneously,
+IPFS2 is a proof-of-concept IPFS gateway using an ENS CCIP Resolver wrapped in a `base32` decoder, capable of resolving IPFS and IPNS contenthash as subdomains `*.IPFS2.eth` when queried via a URL. `IPFS2.eth` is a dual implementation of CCIP-Read 'Off-chain Lookup', in which the Resolver contract is capable of fulfilling two queries simultaneously,
 
 - to fetch the ENS contenthash as the parent domain's subdomain, and
 - to fetch the RFC-8615 compliant records stored at that contenthash, if requested.
 
-IPFS2 currently supports `eth.limo`, `eth.casa` and `eth.link` as ENS gateways and is designed to accept new gateways.
+Several centralised providers offer public gateways for IPFS/IPNS resolution such as `https://dweb.link` and `https://ipfs.io`. IPFS2 is a service similar to these public IPFS gateways but it uses an ENS CCIP Resolver and public ENS gateways (`eth.limo`, `eth.link` etc). IPFS2 uses `eth.limo` as its default CCIP gateway to read specific ENS records and is designed to fallback to secondary gateways.
 
 ## Design
 
 IPFS2 architecture is as follows:
 
 ![](https://raw.githubusercontent.com/namesys-eth/ipfs2-resources/main/graphics/ipfs2.png)
+
+## Query Syntax
+
+### Resolve `contenthash`
+
+Resolution of `<CIDv1-base32>.ipfs2.eth` will decode and resolve `<CIDv1-base32>` via CCIP as ABI-encoded contenthash. This functionality supports both IPNS and IPFS hashes in `base32` format.
+
+### Resolving ENS Records
+
+IPFS2 Resolver also supports ENS-specific features such as querying ENS records associated with the subdomain. We use [RFC-8615](https://www.rfc-editor.org/rfc/rfc8615) `.well-known` directory format to implement this. The query syntax then reads:
+
+```
+https://<hash>.ipfs2.eth.*/.well-known/<data>.json
+```
+
+#### Some Examples
+
+1. Subdomain's ENS avatar record is stored as `<CIDv1-base32>.ipfs2.eth.*/.well-known/avatar.json` in format `{"data":"0x_abi_encoded_avatar_string"}`.
+
+2. Subdomain's ETH address record is stored as `<CIDv1-base32>.ipfs2.eth.*/.well-known/addr-60.json` in format  `{"data":"0x_abi_encoded_address"}`.
 
 ## Contracts
 
