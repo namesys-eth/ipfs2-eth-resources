@@ -2,10 +2,10 @@
 #### Authors: `sshmatrix`, `0xc0de4c0ffee`
 ###### tags: `specification` `resolver` `contenthash` `ccip` `ens`
 
-IPFS2 is a proof-of-concept IPFS gateway using an ENS CCIP Resolver wrapped in a `base32` decoder, capable of resolving IPFS, and IPNS (and IPLD) contenthashes as subdomains `*.IPFS2.eth` when queried via a URL. `IPFS2.eth` is a dual implementation of CCIP-Read 'Off-chain Lookup', in which the Resolver contract is capable of fulfilling two queries simultaneously,
+IPFS2 is a proof-of-concept IPFS gateway using an ENS CCIP Resolver wrapped in a `base32` decoder, capable of resolving IPFS and IPNS (and IPLD) contenthashes as subdomains `*.IPFS2.eth` when queried via a URL. `IPFS2.eth` is a dual implementation of CCIP-Read 'Off-chain Lookup', in which the Resolver contract is capable of fulfilling two queries simultaneously,
 
 - to fetch the ENS contenthash as the parent domain's subdomain, and
-- to fetch the RFC-8615 compliant records stored at that contenthash, if requested.
+- to fetch the RFC-8615 compliant ENS records stored at that contenthash, if requested.
 
 Several centralised providers offer public gateways for IPFS/IPNS resolution such as `https://dweb.link` and `https://ipfs.io`. IPFS2 is a service similar to these public IPFS gateways but it uses an ENS CCIP Resolver and public ENS gateways (`eth.limo`, `eth.link` etc). IPFS2 uses `eth.limo` as its default CCIP gateway to read specific ENS records and is designed to fallback to secondary gateways.
 
@@ -47,7 +47,7 @@ https://<hash>.ipfs2.eth.*/.well-known/<data>.json
 }
 ```
 
-##### JS Minimal implementation
+#### JS Minimal Implementation
 
 ```js
 infura = new ethers.providers.InfuraProvider("goerli", SECRET_API_KEY);
@@ -66,7 +66,3 @@ Mainnet : [Code audit in progress](https://github.com/namesys-eth/ipfs2-eth-reso
 ## Source Codes
 
 IPFS2 CCIP contracts are available on [GitHub](https://github.com/namesys-eth/ipfs2-eth-resolver)
-
-## How will we use the funds?
-
-It'll likely cost close to 1 ETH to deploy the complete CCIP Resolver on Mainnet.
