@@ -2,7 +2,7 @@
 #### Authors: `sshmatrix`, `0xc0de4c0ffee`
 ###### tags: `specification` `resolver` `contenthash` `ccip` `ens`
 
-IPFS2 is a proof-of-concept IPFS gateway using an ENS CCIP Resolver wrapped in a `base32` decoder, capable of resolving IPFS and IPNS contenthash as subdomains `*.IPFS2.eth` when queried via a URL. `IPFS2.eth` is a dual implementation of CCIP-Read 'Off-chain Lookup', in which the Resolver contract is capable of fulfilling two queries simultaneously,
+IPFS2 is a proof-of-concept IPFS gateway using an ENS CCIP Resolver wrapped in a `base32` decoder, capable of resolving IPFS, and IPNS (and IPLD) contenthashes as subdomains `*.IPFS2.eth` when queried via a URL. `IPFS2.eth` is a dual implementation of CCIP-Read 'Off-chain Lookup', in which the Resolver contract is capable of fulfilling two queries simultaneously,
 
 - to fetch the ENS contenthash as the parent domain's subdomain, and
 - to fetch the RFC-8615 compliant records stored at that contenthash, if requested.
@@ -19,11 +19,11 @@ IPFS2 architecture is as follows:
 
 ### Resolve `contenthash`
 
-Resolution of `<CIDv1-base32>.ipfs2.eth` will decode and resolve `<CIDv1-base32>` via CCIP as ABI-encoded contenthash. This functionality supports both IPNS and IPFS hashes in `base32` format.
+Resolution of `<CIDv1-base32>.ipfs2.eth` will decode and resolve `<CIDv1-base32>` via CCIP as ABI-encoded contenthash. This functionality supports both IPNS and IPFS (and IPLD) contenthashes in `base32` format.
 
 ### Resolving ENS Records
 
-IPFS2 Resolver also supports ENS-specific features such as querying ENS records associated with the subdomain. We use [RFC-8615](https://www.rfc-editor.org/rfc/rfc8615) `.well-known` directory format to implement this. The query syntax then reads:
+IPFS2 Resolver also supports ENS-specific features such as querying ENS records associated with the (sub)domain. We use [RFC-8615](https://www.rfc-editor.org/rfc/rfc8615) `.well-known` directory format to implement this. The query syntax then reads:
 
 ```
 https://<hash>.ipfs2.eth.*/.well-known/<data>.json
@@ -31,9 +31,31 @@ https://<hash>.ipfs2.eth.*/.well-known/<data>.json
 
 #### Some Examples
 
-1. Subdomain's ENS avatar record is stored as `<CIDv1-base32>.ipfs2.eth.*/.well-known/avatar.json` in format `{"data":"0x_abi_encoded_avatar_string"}`.
+1. (Sub)domain's ENS avatar record is stored as `<CIDv1-base32>.ipfs2.eth.*/.well-known/avatar.json` in format
 
-2. Subdomain's ETH address record is stored as `<CIDv1-base32>.ipfs2.eth.*/.well-known/addr-60.json` in format  `{"data":"0x_abi_encoded_address"}`.
+```
+{
+  "data": "0x_abi_encoded_avatar_string"
+}
+```
+
+2. (Sub)domain's ETH address record is stored as `<CIDv1-base32>.ipfs2.eth.*/.well-known/addr-60.json` in format
+
+```
+{
+  "data": "0x_abi_encoded_address"
+}
+```
+
+##### JS Minimal implementation
+
+```js
+infura = new ethers.providers.InfuraProvider("goerli", SECRET_API_KEY);
+//vitalik.eth's contenthash for testing: bafybeiftyo7xm6ktvsmijtwyzcqavotjybnmsiqfxx3fawxvpr666r6z64
+const resolver = await infura.getResolver("bafybeiftyo7xm6ktvsmijtwyzcqavotjybnmsiqfxx3fawxvpr666r6z64.ipfs2.eth");
+const contenthash = await resolver.getContentHash();
+console.log(contenthash);
+```
 
 ## Contracts
 
@@ -44,3 +66,7 @@ Mainnet : [Code audit in progress](https://github.com/namesys-eth/ipfs2-eth-reso
 ## Source Codes
 
 IPFS2 CCIP contracts are available on [GitHub](https://github.com/namesys-eth/ipfs2-eth-resolver)
+
+## How will we use the funds?
+
+It'll likely cost close to 1 ETH to deploy the complete CCIP Resolver on Mainnet.

@@ -34,3 +34,7 @@ Mainnet : [Code audit in progress](https://github.com/namesys-eth/ipfs2-eth-reso
 ## Source Codes
 
 IPFS2 CCIP contracts are available on [GitHub](https://github.com/namesys-eth/ipfs2-eth-resolver)
+
+## How will we use the funds?
+
+It'll likely cost close to 1 ETH to deploy the complete CCIP Resolver on Mainnet.
