@@ -1,43 +1,38 @@
 # IPFS2: Web3 IPFS Gateway
+#### Authors: `sshmatrix`, `0xc0de4c0ffee`
+###### tags: `specification` `resolver` `contenthash` `ccip` `ens`
 
-IPFS2 resolves IPFS/IPNS contenthashes as sub-domains of `ipfs2.eth`. Several centralised IPFS content providers offer IPFS/IPNS resolution of the form
+IPFS2 is a proof-of-concept ENS Resolver capable of resolving IPFS/IPNS contenthash and records as subdomains of a parent name, and render associated ABI-encoded records when queried via a URL. Several centralised IPFS content providers offer IPFS/IPNS resolution of the form `https://<hash>.dweb.link` → `https://ipfs.io/ipfs/<hash>` (or similar). IPFS2 is a similar service with off-chain centralised resolvers replaced with on-chain resolvers. IPFS2 Resolver also supports additional features such as querying `data` records associated with the (ENS) contenthash in [RFC-8615](https://www.rfc-editor.org/rfc/rfc8615) compatible URL format.
+
+## Query Syntax
+
+To resolve `<data>` content stored at IPFS `<hash>`, i.e. `https://ipfs.io/ipfs/<hash>/.well-known/<data>.json`, URL query is formatted as:
 
 ```
-https://<hash>.ipfs2.eth.link
+https://<hash>.ipfs2.eth.*/.well-known/<data>.json
 ```
 
 # Description
 
-`istest.eth` is a lightweight implementation of CCIP-Read 'Off-chain Lookup' that allows resolution of your testnet ENS name on mainnet. For example, users with an ENS name `name.eth` on a testnet (say Goerli) can now gaslessly resolve all records of `name.eth` on mainnet subdomain `name.istest.eth`. The testnet is mapped to mainnet by the CCIP-Read Resolver contract deployed on `istest.eth` mediated by a HTTP gateway. `istest.eth` is proof-of-concept of a contract that maps ENS records from one network to another. Naturally, the two participating networks can also be mainnet and an Ethereum L2 for example, or any pair of compatible networks. For instance, `istest.eth` has also been deployed on Goerli where it maps mainnet ENS records to testnet.
+`IPFS2.eth` is a dual implementation of CCIP-Read 'Off-chain Lookup', in which the Resolver contract is capable of fulfilling two queries simultaneously,
 
-# Why `istest.eth`?
+- to fetch the ENS contenthash as the parent domain's subdomain, and
+- to fetch the RFC-8615 compliant records stored at that contenthash, if requested.
 
-We realised the need of testnet → mainnet name resolution when building a subdomain-based community project. For instance, imagine a subdomain membership club built on `vitalik.eth` where subdomain holders can access their membership page at `nick.vitalik.eth` and interact with other members of the club through their subdomain page. Such an architecture will ideally consist of a common default contenthash deployment for all holders, with individual pages accessing the `window.location.href` property of subdomain hosts (i.e. `nick.vitalik.eth`) and rendering content accordingly. Testing such an architecture turned out to be an unecessary challenge since we couldn't resolve testnet contenthashes on ETH.LIMO gateway (since ETH.LIMO only supports mainnet). This led to the idea of a testnet → mainnet mapper which would allow us to resolve testnet contenthashes on ETH.LIMO for testing. Similar situation arose in another project where it was necessary to import the rich registry of ENS from mainnet to testnet for appropriate test environment recreation.
+IPFS2 currently supports ETH.LIMO, ETH.CASA and ETH.LINK as ENS gateways and is designed to accept new gateways.
 
-## Schema
+## Design
 
-`istest.eth` CCIP architecture has signature verification feature built in, meaning that all responses from the gateway are authenticated by the contract before resolving the requested name. The underlying resolver contract is fully modular, meaning anyone can 'blindly' fork their own version on mainnet and change configurations post hoc according to their needs. A summary of the workstream is as follows:
+IPFS2 architecture is as follows:
 
-- Client makes a request to resolve `name.istest.eth` on mainnet
-- Resolver initiates a CCIP-Read call to the gateway
-- Gateway responds with signed records of `name.eth` on testnet
-- Resolver collects gateway's response and verifies the signature
-- If verified, `name.istest.eth` emits testnet records of `name.eth`
-
-The schematic of the algorithm with Goerli as testnet is shown below:
-
-![](https://raw.githubusercontent.com/bensyc/istest-eth/master/resources/schematic.png)
+![](https://raw.githubusercontent.com/namesys-eth/ipfs2-resources/main/graphics/ipfs2.png)
 
 ## Contracts
 
-Testnet (Mainnet → Goerli): [`0x1EA6EFb27f4013D3A16E298a69C869C73CDB3479`](https://goerli.etherscan.io/address/0x1EA6EFb27f4013D3A16E298a69C869C73CDB3479#code)
+Testnet : [`0x6418fc3db67e3c7a6aeafcb5a6416ccd6b75ef30`](https://goerli.etherscan.io/address/0x6418fc3db67e3c7a6aeafcb5a6416ccd6b75ef30#code)
 
-Mainnet (Goerli → Mainnet): [`0x0Db7E56BFE3cbCD7B952F750c303CbF809585C6b`](https://etherscan.io/address/0x0Db7E56BFE3cbCD7B952F750c303CbF809585C6b#code)
+Mainnet : [Code audit in progress](https://github.com/namesys-eth/ipfs2-eth-resolver/blob/main/src/IPFS2.sol)
 
 ## Source Codes
 
-Node.js scripts for running multi-threaded gateways as well as source code for the contract are available on [GitHub](https://github.com/bensyc/istest-eth)
-
-## Current State
-
-There is currently [a bug in ethers.js](https://github.com/ethers-io/ethers.js/issues/3341) implementation in Node environment which is prohibiting contenthashes from getting mapped. This bug had previously been reported to ricmoo.eth & ETH.LIMO and fixed at that time, but it seems to have reappeared. We are in touch with ETH.LIMO about this issue and expect this to be resolved soon.
+IPFS2 CCIP contracts are available on [GitHub](https://github.com/namesys-eth/ipfs2-eth-resolver)
