@@ -19,7 +19,7 @@ https://<hash>.ipfs2.eth.*/.well-known/<data>.json
 - to fetch the ENS contenthash as the parent domain's subdomain, and
 - to fetch the RFC-8615 compliant records stored at that contenthash, if requested.
 
-IPFS2 currently supports ETH.LIMO, ETH.CASA and ETH.LINK as ENS gateways and is designed to accept new gateways.
+IPFS2 currently supports `eth.limo`, `eth.casa` and `eth.link` as ENS gateways and is designed to accept new gateways.
 
 ## Design
 

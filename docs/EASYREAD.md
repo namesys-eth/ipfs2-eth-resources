@@ -17,7 +17,7 @@ IPFS2.eth is a dual implementation of CCIP-Read 'Off-chain Lookup', in which the
 - to fetch the ENS contenthash as the parent domain's subdomain, and
 - to fetch the RFC-8615 compliant records stored at that contenthash, if requested.
 
-IPFS2 currently supports ETH.LIMO, ETH.CASA and ETH.LINK as ENS gateways and is designed to accept new gateways.
+IPFS2 currently supports **eth.LIMO**, **eth.CASA** and **eth.LINK** as ENS gateways and is designed to accept new gateways.
 
 ## Design
 
