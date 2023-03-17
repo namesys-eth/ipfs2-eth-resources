@@ -51,7 +51,7 @@ https://<hash>.ipfs2.eth.*/.well-known/<data>.json
 
 ```js
 infura = new ethers.providers.InfuraProvider("goerli", SECRET_API_KEY);
-//vitalik.eth's contenthash for testing: bafybeiftyo7xm6ktvsmijtwyzcqavotjybnmsiqfxx3fawxvpr666r6z64
+// vitalik.eth's contenthash for testing: bafybeiftyo7xm6ktvsmijtwyzcqavotjybnmsiqfxx3fawxvpr666r6z64
 const resolver = await infura.getResolver("bafybeiftyo7xm6ktvsmijtwyzcqavotjybnmsiqfxx3fawxvpr666r6z64.ipfs2.eth");
 const contenthash = await resolver.getContentHash();
 console.log(contenthash);
