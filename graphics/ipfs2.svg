@@ -15,7 +15,7 @@
    id="svg6"
    inkscape:version="1.0.2 (e86c8708, 2021-01-15)"
    sodipodi:docname="ipfs2.svg"
-   inkscape:export-filename="/Users/avneetsingh/Documents/sshmatrix/buidl/istest/resources/schematic.png"
+   inkscape:export-filename="/Users/sshmatrix/Idee/sshmatrix/Buidl/namesys-eth/ipfs2-resources/graphics/ipfs2.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300">
   <metadata
@@ -150,9 +150,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.37750098"
-     inkscape:cx="406.10813"
-     inkscape:cy="374.44488"
+     inkscape:zoom="0.47875938"
+     inkscape:cx="520.21052"
+     inkscape:cy="475.35494"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -488,14 +488,14 @@
     <text
        xml:space="preserve"
        style="font-size:6.08604px;line-height:1.25;font-family:Palatino;-inkscape-font-specification:Palatino;font-variant-ligatures:none;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0.380377"
-       x="122.1442"
+       x="90.079559"
        y="62.5802"
        id="text1011"><tspan
          sodipodi:role="line"
          id="tspan1009"
-         x="122.1442"
+         x="90.079559"
          y="62.5802"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:SPOTNIK;-inkscape-font-specification:'SPOTNIK Bold';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.380377;stroke-opacity:0.0282258">PURELY DECENTRALISED Web3 IPFS Gateway</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:SPOTNIK;-inkscape-font-specification:'SPOTNIK Bold';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.380377;stroke-opacity:0.0282258">PURE web3 IPFS Gateway</tspan></text>
     <g
        id="g1809"
        transform="translate(-28.673192,-204.57353)">
