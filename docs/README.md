@@ -1,5 +1,5 @@
 # IPFS2: Web3 IPFS Gateway
-#### Authors: `sshmatrix`, `0xc0de4c0ffee`
+#### author(s): `sshmatrix`, `0xc0de4c0ffee`
 ###### tags: `specification` `resolver` `contenthash` `ccip` `ens`
 
 IPFS2 is a proof-of-concept IPFS gateway using an ENS CCIP Resolver wrapped in a `base32` decoder, capable of resolving IPFS and IPNS (and IPLD) contenthashes as subdomains `*.IPFS2.eth` when queried via a URL. `IPFS2.eth` is a dual implementation of CCIP-Read 'Off-chain Lookup', in which the Resolver contract is capable of fulfilling two queries simultaneously,
