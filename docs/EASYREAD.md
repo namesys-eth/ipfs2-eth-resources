@@ -11,7 +11,7 @@ Several centralised providers offer public gateways for IPFS/IPNS resolution suc
 
 IPFS2 architecture is as follows:
 
-![](https://raw.githubusercontent.com/namesys-eth/ipfs2-resources/main/graphics/ipfs2.png)
+![](https://raw.githubusercontent.com/namesys-eth/ipfs2-eth-resources/main/graphics/ipfs2.png)
 
 ## Query Syntax
 
